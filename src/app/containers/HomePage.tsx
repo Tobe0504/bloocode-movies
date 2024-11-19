@@ -27,11 +27,10 @@ const HomePage = () => {
   useEffect(() => {
     if (typeof window !== "undefined") {
       const favourites: movieType[] = JSON.parse(
-        localStorage &&
-          (localStorage.getItem(LOCAL_FAVOURITE_MOVIE_KEY) as string)
+        localStorage.getItem(LOCAL_FAVOURITE_MOVIE_KEY) as string
       );
 
-      if (favourites.length) {
+      if (favourites?.length) {
         setFavouritesState(favourites);
       }
     }

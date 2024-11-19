@@ -9,7 +9,7 @@ type CircularProgressTypes = {
 const CircularProgress = ({
   width = "2rem",
   height = "2rem",
-  color = "#ffffff",
+  color = "#E50000",
 }: CircularProgressTypes) => {
   return (
     <svg

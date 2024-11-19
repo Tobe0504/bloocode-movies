@@ -126,32 +126,34 @@ const HomeHero = ({ setFavourites }: HomeHeroTypes) => {
           <div
             className="p-3 bg-black-200 border-2 border-black-100 rounded-lg cursor-pointer"
             onClick={() => {
-              const favouritedMovies: movieType[] = JSON.parse(
-                localStorage.getItem(LOCAL_FAVOURITE_MOVIE_KEY) as string
-              );
-              const movieIsFavourited = favouritedMovies?.find(
-                (data) => data?.id === activeMovie?.id
-              );
+              if (typeof window !== "undefined") {
+                const favouritedMovies: movieType[] = JSON.parse(
+                  localStorage.getItem(LOCAL_FAVOURITE_MOVIE_KEY) as string
+                );
+                const movieIsFavourited = favouritedMovies?.find(
+                  (data) => data?.id === activeMovie?.id
+                );
 
-              if (movieIsFavourited) {
+                if (movieIsFavourited) {
+                  setNotiticationFunction(
+                    setNotifications,
+                    "Movie is already in favourites"
+                  );
+                  return;
+                }
+
+                addToFavourites(activeMovie as movieType);
+                const localFavourites = JSON.parse(
+                  localStorage.getItem(LOCAL_FAVOURITE_MOVIE_KEY) as string
+                );
+                setFavourites(localFavourites);
+
                 setNotiticationFunction(
                   setNotifications,
-                  "Movie is already in favourites"
+                  "Movie added to favourites",
+                  "success"
                 );
-                return;
               }
-
-              addToFavourites(activeMovie as movieType);
-              const localFavourites = JSON.parse(
-                localStorage.getItem(LOCAL_FAVOURITE_MOVIE_KEY) as string
-              );
-              setFavourites(localFavourites);
-
-              setNotiticationFunction(
-                setNotifications,
-                "Movie added to favourites",
-                "success"
-              );
             }}
           >
             <Add />
