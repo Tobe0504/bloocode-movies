@@ -1,24 +1,31 @@
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { Dispatch, SetStateAction, useContext } from "react";
 import Clock from "../assets/svgs/Clock";
+import Delete from "../assets/svgs/Delete";
 import Rating from "../assets/svgs/Rating";
+import { AppContext } from "../context/AppContext";
+import { setNotiticationFunction } from "../helperFunctions/setNotificationFunction";
+import { IMAGE_BASE_URL, LOCAL_FAVOURITE_MOVIE_KEY } from "../utils/constants";
 import { movieType } from "../utils/types";
+import Button from "./Button";
 
 type MovieCardTypes = {
   data: movieType;
+  setFavouritesState?: Dispatch<SetStateAction<movieType[]>>;
 };
 
-const baseUrl = "https://image.tmdb.org/t/p/original";
+const MovieCard = ({ data, setFavouritesState }: MovieCardTypes) => {
+  // Context
+  const { setNotifications } = useContext(AppContext);
 
-const MovieCard = ({ data }: MovieCardTypes) => {
   return (
     <Link
       href={`/${data?.id}`}
-      className="w-[224px] max-h-[408px] border-2 border-black-100 p-4 bg-black-300 rounded-lg shrink-0 grow-0 hover:scale-105 duration-500"
+      className="group w-[224px] border-2 border-black-100 p-4 bg-black-300 rounded-lg shrink-0 grow-0 hover:scale-105 duration-500 relative"
     >
       <Image
-        src={baseUrl + data.backdrop_path}
+        src={IMAGE_BASE_URL + data.backdrop_path}
         alt="Image"
         className="w-full h-[232px] object-cover"
         width={300}
@@ -39,6 +46,47 @@ const MovieCard = ({ data }: MovieCardTypes) => {
           <span>{Math.floor(data?.popularity)}</span>
         </div>
       </div>
+
+      {setFavouritesState && (
+        <div
+          className=" flex items-center justify-center gap-4 w-full text-[12px] font-semibold font-body mt-4 cursor-pointer  relative bottom-[-100px] group-hover:bottom-[0px] transition-all ease-in-out overflow-y-hidden"
+          onClick={(e) => {
+            e.preventDefault();
+            // e.stopPropagation();
+
+            if (typeof window !== "undefined") {
+              const localItems: movieType[] = JSON.parse(
+                localStorage.getItem(LOCAL_FAVOURITE_MOVIE_KEY) as string
+              );
+
+              if (localItems.includes(data)) {
+                setNotiticationFunction(
+                  setNotifications,
+                  "This item is not favourited yet"
+                );
+
+                return;
+              }
+
+              const filteredLocal: movieType[] = localItems.filter(
+                (localData) => localData?.id !== data?.id
+              );
+
+              localStorage.setItem(
+                LOCAL_FAVOURITE_MOVIE_KEY,
+                JSON.stringify(filteredLocal)
+              );
+
+              if (setFavouritesState) {
+                setFavouritesState(filteredLocal);
+              }
+            }
+          }}
+        >
+          <Delete />
+          <span>Delete from favoirites</span>
+        </div>
+      )}
     </Link>
   );
 };

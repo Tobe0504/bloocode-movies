@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { Dispatch, SetStateAction, useRef } from "react";
 // import Skeleton from "react-loading-skeleton";
 import { movieType } from "../utils/types";
 import Loader from "./Loader";
@@ -11,12 +11,14 @@ type MovieListContainerTypes = {
   list?: movieType[];
   title?: string;
   loading?: boolean;
+  setFavouriteState?: Dispatch<SetStateAction<movieType[]>>;
 };
 
 const MovieListContainer = ({
   list,
   title,
   loading,
+  setFavouriteState,
 }: MovieListContainerTypes) => {
   // Refs
   const containerRef = useRef<HTMLDivElement>(null);
@@ -72,21 +74,14 @@ const MovieListContainer = ({
         ref={containerRef}
       >
         {list?.length &&
-          list?.map((data) => <MovieCard data={data} key={data?.id} />)}
+          list?.map((data) => (
+            <MovieCard
+              data={data}
+              key={data?.id}
+              setFavouritesState={setFavouriteState}
+            />
+          ))}
       </div>
-      {/* <div className="border-2 border-red-100">
-        {!loading && (
-          <Skeleton
-            count={1}
-            className="border-2 border-green-100 block rounded mb-0"
-            height={300}
-            width={224} // No need for quotes around numbers
-            baseColor="#999999" // Base color for the skeleton
-            highlightColor="#ffffff" // Highlight color for the shimmer effect
-            duration={1.5} // Duration of the animation in seconds
-          />
-        )}
-      </div> */}
     </section>
   );
 };

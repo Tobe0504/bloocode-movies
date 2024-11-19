@@ -47,13 +47,13 @@ const MovieDetailsCast = ({ data }: MovieDetailsCastType) => {
                 return (
                   <div
                     key={data?.id}
-                    className="shrink-0 grow-0 lg:basis-[200px] basis-full w-full"
+                    className="shrink-0 grow-0 lg:basis-[calc(25%-1rem)] basis-full w-full"
                   >
                     <Image
                       src={IMAGE_BASE_URL + data?.profile_path}
                       alt={data?.original_name}
                       width={2000}
-                      className="w-full lg:w-[200px] max-h-[350px] object-cover rounded-md "
+                      className="w-full lg:w-[calc(25%-1rem)] max-h-[350px] object-cover rounded-md "
                       height={200}
                       layout="responsive"
                     />

@@ -43,7 +43,11 @@ const HomePage = () => {
       <HomeHero setFavourites={setFavouritesState} />
 
       {favouritesState?.length > 0 && (
-        <MovieListContainer title="Favourites" list={favouritesState} />
+        <MovieListContainer
+          title="Favourites"
+          list={favouritesState}
+          setFavouriteState={setFavouritesState}
+        />
       )}
 
       <MovieListContainer
