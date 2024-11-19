@@ -24,6 +24,12 @@ export const useTopRated = () => {
   return useGetHook(url, configOptions);
 };
 
+export const useTrending = () => {
+  const url = `https://api.themoviedb.org/3/trending/movie/day?language=en-US&api_key=${config.API_KEY}`;
+
+  return useGetHook(url, configOptions);
+};
+
 export const useUpcoming = () => {
   const url = `https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1&api_key=${config.API_KEY}`;
 

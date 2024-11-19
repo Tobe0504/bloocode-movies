@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Layout from "../components/Layout";
 import MovieListContainer from "../components/MovieListContainer";
-import { useNowPlaying, useUpcoming } from "../hooks/useMovies";
+import { useNowPlaying, useTrending, useUpcoming } from "../hooks/useMovies";
 import { LOCAL_FAVOURITE_MOVIE_KEY } from "../utils/constants";
 import { movieType } from "../utils/types";
 import HomeHero from "./HomeHero";
@@ -14,11 +14,13 @@ const HomePage = () => {
     useNowPlaying();
   const { data: topRatedData, isLoading: topRatedIsLoading } = useNowPlaying();
   const { data: upcomingData, isLoading: upcomingIsLoading } = useUpcoming();
+  const { data: trendingData, isLoading: trendingIsLoading } = useTrending();
 
   // Utils
   const nowPlaying = nowPlayingData?.data?.results;
   const topRated = topRatedData?.data?.results;
   const upcoming = upcomingData?.data?.results;
+  const trending = trendingData?.data?.results;
 
   // States
   const [favouritesState, setFavouritesState] = useState<movieType[]>([]);
@@ -55,6 +57,13 @@ const HomePage = () => {
         list={nowPlaying}
         loading={nowPlayingIsLoading}
       />
+
+      <MovieListContainer
+        title="Trending"
+        list={trending}
+        loading={trendingIsLoading}
+      />
+
       <MovieListContainer
         title="Top Rated"
         list={topRated}
