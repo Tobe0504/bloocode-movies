@@ -1,7 +1,6 @@
 "use client";
 
 import React, { Dispatch, SetStateAction, useRef } from "react";
-// import Skeleton from "react-loading-skeleton";
 import { movieType } from "../utils/types";
 import Loader from "./Loader";
 import MovieCard from "./MovieCard";
@@ -44,10 +43,6 @@ const MovieListContainer = ({
     }
   };
 
-  if (loading) {
-    <Loader />;
-  }
-
   return (
     <section className="my-10">
       <div className="flex items-center justify-between gap-4  my-5">
@@ -73,14 +68,20 @@ const MovieListContainer = ({
         className="flex overflow-auto gap-5 p-4 scrollbar-none"
         ref={containerRef}
       >
-        {list?.length &&
+        {loading ? (
+          <div className="flex items-center justify-center  w-full">
+            <Loader />
+          </div>
+        ) : (
+          list?.length &&
           list?.map((data) => (
             <MovieCard
               data={data}
               key={data?.id}
               setFavouritesState={setFavouriteState}
             />
-          ))}
+          ))
+        )}
       </div>
     </section>
   );

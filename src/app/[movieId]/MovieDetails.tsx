@@ -37,7 +37,7 @@ const MovieDetails = () => {
               <MovieDetailsDescription data={movieData} />
               <MovieDetailsCast data={movieCast} />
             </div>
-            <div className="basis-[400px]">
+            <div className="basis-full lg:basis-[400px] ">
               <Card>
                 <MovieDetailsOtherInfo data={movieData} crew={movieCrew} />
               </Card>
