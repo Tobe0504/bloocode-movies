@@ -22,7 +22,7 @@ const MovieCard = ({ data, setFavouritesState }: MovieCardTypes) => {
   return (
     <Link
       href={`/${data?.id}`}
-      className="group w-[224px] border-2 border-black-100 p-4 bg-black-300 rounded-lg shrink-0 grow-0 hover:scale-105 duration-500 relative"
+      className="group w-[224px] border-2 border-black-100 p-4 bg-black-300 rounded-lg shrink-0 grow-0 hover:scale-105 duration-500 relative overflow-hidden"
     >
       <Image
         src={IMAGE_BASE_URL + data.backdrop_path}
@@ -49,10 +49,9 @@ const MovieCard = ({ data, setFavouritesState }: MovieCardTypes) => {
 
       {setFavouritesState && (
         <div
-          className=" flex items-center justify-center gap-4 w-full text-[12px] font-semibold font-body mt-4 cursor-pointer  relative bottom-[-100px] group-hover:bottom-[0px] transition-all ease-in-out overflow-y-hidden"
+          className=" flex items-center justify-center gap-4 w-full text-[12px] font-semibold font-body mt-4 cursor-pointer  relative bottom-[-100px] group-hover:bottom-[0px] transition-all ease-in-out"
           onClick={(e) => {
             e.preventDefault();
-            // e.stopPropagation();
 
             if (typeof window !== "undefined") {
               const localItems: movieType[] = JSON.parse(

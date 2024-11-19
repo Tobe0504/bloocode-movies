@@ -2,7 +2,7 @@ import { LOCAL_FAVOURITE_MOVIE_KEY } from "../utils/constants";
 import { movieType } from "../utils/types";
 
 export const addToFavourites = (movie: movieType) => {
-  if (typeof window !== undefined) {
+  if (typeof window !== undefined && movie) {
     const favouriteMovies: movieType[] = JSON.parse(
       localStorage.getItem(LOCAL_FAVOURITE_MOVIE_KEY) as string
     );

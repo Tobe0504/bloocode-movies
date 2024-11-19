@@ -48,6 +48,7 @@ const HomeHero = ({ setFavourites }: HomeHeroTypes) => {
     [moviesState]
   );
 
+  // Effects
   useEffect(() => {
     if (movies?.length) {
       setMoviesState(
@@ -67,7 +68,7 @@ const HomeHero = ({ setFavourites }: HomeHeroTypes) => {
   useEffect(() => {
     if (movies?.length) {
       const interval = setInterval(() => {
-        if (activeMovieIndex < movies?.length - 1) {
+        if (activeMovieIndex < movies?.length) {
           setActiveMovieIndex((prevState) => prevState + 1);
         } else {
           setActiveMovieIndex(0);
@@ -80,7 +81,7 @@ const HomeHero = ({ setFavourites }: HomeHeroTypes) => {
     }
 
     // eslint-disable-next-line
-  }, [movies]);
+  }, [movies, activeMovieIndex]);
 
   useEffect(() => {
     if (moviesState?.length) {
